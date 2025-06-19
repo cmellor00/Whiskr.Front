@@ -16,6 +16,11 @@ export function AuthProvider({ children }) {
         setTokenState(newToken);
     };
 
+
+
+
+
+
     const fetchUser = async (token) => {
         try {
             const response = await fetch(`${API}/users/me`, {
@@ -45,25 +50,27 @@ export function AuthProvider({ children }) {
     }, [tokenState]);
 
     const register = async (credentials) => {
-        const response = await fetch(`${API}/users/register`, {
+        const res = await fetch(`${API}/users/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(credentials),
         });
-        const result = await response.json();
-        if (!response.ok) throw result;
+        const result = await res.json();
+        if (!res.ok) throw result;
         setToken(result.token);
+        await fetchUser(result.token);
     };
 
     const login = async (credentials) => {
-        const response = await fetch(`${API}/users/login`, {
+        const res = await fetch(`${API}/users/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(credentials),
         });
-        const result = await response.json();
-        if (!response.ok) throw result;
+        const result = await res.json();
+        if (!res.ok) throw result;
         setToken(result.token);
+        await fetchUser(result.token);
     };
 
     const logout = () => {
