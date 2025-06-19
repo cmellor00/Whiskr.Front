@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import { API } from "../api/apiContext";
-import { useAuth } from "../auth/AuthContext";
-
 function RecipeCard({ recipe, showSaveButton = true }) {
     const [expanded, setExpanded] = useState(false);
     const [ingredients, setIngredients] = useState([]);
     const [error, setError] = useState("");
-    const { token } = useAuth();
+    const { token, user } = useAuth(); // ensure user includes is_admin
+
+    const isAdmin = user?.is_admin;
 
     const toggleIngredients = async () => {
         if (expanded) {
@@ -44,6 +42,24 @@ function RecipeCard({ recipe, showSaveButton = true }) {
         }
     };
 
+    const handleDelete = async () => {
+        if (!window.confirm("Are you sure you want to delete this recipe?")) return;
+        try {
+            const res = await fetch(`${API}/recipes/${recipe.id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!res.ok) throw new Error("Delete failed");
+            alert("Recipe deleted!");
+            // Optionally refresh the list or call a parent callback
+        } catch (err) {
+            console.error(err);
+            alert("Could not delete recipe.");
+        }
+    };
+
     return (
         <li style={{ marginBottom: "1em" }}>
             <button onClick={toggleIngredients}>
@@ -63,13 +79,18 @@ function RecipeCard({ recipe, showSaveButton = true }) {
                     </ul>
                     <h4>👨‍🍳 Instructions</h4>
                     <p>{recipe.instructions}</p>
+
                     {showSaveButton && token && (
                         <button onClick={handleSave}>📥 Save to My Book</button>
+                    )}
+
+                    {isAdmin && (
+                        <button onClick={handleDelete} style={{ color: "red" }}>
+                            ❌ Delete Recipe
+                        </button>
                     )}
                 </div>
             )}
         </li>
     );
 }
-
-export default RecipeCard;
