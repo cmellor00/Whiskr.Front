@@ -1,4 +1,4 @@
-function RecipeCard({ recipe, showSaveButton = true }) {
+export default function RecipeCard({ recipe, showSaveButton = true }) {
     const [expanded, setExpanded] = useState(false);
     const [ingredients, setIngredients] = useState([]);
     const [error, setError] = useState("");
