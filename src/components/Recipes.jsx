@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
-import RecipeCard from "./recipeCard";
+import RecipeCard from "./RecipeCard";
 
 function Home() {
     const { token } = useAuth();

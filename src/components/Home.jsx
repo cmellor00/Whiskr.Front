@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API } from "../api/apiContext";
 import { useAuth } from "../auth/AuthContext";
-import RecipeCard from "./recipeCard";
+import RecipeCard from "./RecipeCard";
 
 
 function Recipes() {
