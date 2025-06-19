@@ -20,7 +20,7 @@ function NavBar() {
                 <>
                     <Link to="/Recipes" style={{ marginRight: "1rem" }}>My Recipe Book</Link>
                     <Link to="/Pantry" style={{ marginRight: "1rem" }}>My Pantry</Link>
-                    <Link to="/addRecipe" style={{ marginRight: "1rem" }}>Add Recipe</Link>
+                    <Link to="/AddRecipe" style={{ marginRight: "1rem" }}>Add Recipe</Link>
 
                     <button
                         onClick={logout}
