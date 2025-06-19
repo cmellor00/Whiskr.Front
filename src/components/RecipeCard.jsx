@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+
 export default function RecipeCard({ recipe, showSaveButton = true }) {
     const [expanded, setExpanded] = useState(false);
     const [ingredients, setIngredients] = useState([]);
