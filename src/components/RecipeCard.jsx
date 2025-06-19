@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 
-export default function RecipeCard({ recipe, showSaveButton = true }) {
+export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) {
     const [expanded, setExpanded] = useState(false);
     const [ingredients, setIngredients] = useState([]);
     const [error, setError] = useState("");
@@ -57,12 +57,15 @@ export default function RecipeCard({ recipe, showSaveButton = true }) {
             });
             if (!res.ok) throw new Error("Delete failed");
             alert("Recipe deleted!");
-            // Optionally refresh the list or call a parent callback
+
+            if (onDelete) onDelete();
+
         } catch (err) {
             console.error(err);
             alert("Could not delete recipe.");
         }
     };
+
 
     return (
         <li style={{ marginBottom: "1em" }}>

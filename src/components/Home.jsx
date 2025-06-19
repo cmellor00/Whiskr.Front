@@ -73,7 +73,7 @@ function Recipes() {
             {error && <p style={{ color: "red" }}>{error}</p>}
             <ul>
                 {recipes.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipe={recipe} />
+                    <RecipeCard key={recipe.id} recipe={recipe} onDelete={() => setRecipes(recipes.filter(r => r.id !== recipe.id))} />
                 ))}
             </ul>
         </div>
