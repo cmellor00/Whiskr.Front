@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../auth/AuthContext";
+import { API } from "../api/apiContext";
 
 export default function RecipeCard({ recipe, showSaveButton = true }) {
     const [expanded, setExpanded] = useState(false);
