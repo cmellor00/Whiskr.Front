@@ -16,12 +16,8 @@ export function AuthProvider({ children }) {
         setTokenState(newToken);
     };
 
-
-
-
-
-
     const fetchUser = async (token) => {
+        console.log("🔐 Fetching user with token:", token); // Debug log
         try {
             const response = await fetch(`${API}/users/me`, {
                 headers: {
@@ -30,19 +26,21 @@ export function AuthProvider({ children }) {
             });
             const data = await response.json();
             if (response.ok) {
+                console.log("✅ User fetched:", data); // Debug log
                 setUser(data);
             } else {
-                console.error("Failed to fetch user:", data);
+                console.error("❌ Failed to fetch user:", data);
                 setUser(null);
             }
         } catch (err) {
-            console.error("Error fetching user:", err);
+            console.error("💥 Error fetching user:", err);
             setUser(null);
         }
     };
 
     useEffect(() => {
         if (tokenState) {
+            console.log("🧠 useEffect: tokenState changed:", tokenState);
             fetchUser(tokenState);
         } else {
             setUser(null);
@@ -58,7 +56,7 @@ export function AuthProvider({ children }) {
         const result = await res.json();
         if (!res.ok) throw result;
         setToken(result.token);
-        await fetchUser(result.token);
+        await fetchUser(result.token); // Immediate fetch
     };
 
     const login = async (credentials) => {
@@ -70,7 +68,7 @@ export function AuthProvider({ children }) {
         const result = await res.json();
         if (!res.ok) throw result;
         setToken(result.token);
-        await fetchUser(result.token);
+        await fetchUser(result.token); // Immediate fetch
     };
 
     const logout = () => {
