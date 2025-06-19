@@ -71,7 +71,7 @@ function Pantry() {
 
     return (
         <div>
-            <h2>🧺 My Pantry</h2>
+            <h2>My Pantry</h2>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
