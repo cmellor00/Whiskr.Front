@@ -1,4 +1,4 @@
-function Recipes() {
+function Home() {
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState("");
     const [expandedRecipeId, setExpandedRecipeId] = useState(null);
@@ -99,3 +99,6 @@ function Recipes() {
         </div>
     );
 }
+
+
+export default Home;

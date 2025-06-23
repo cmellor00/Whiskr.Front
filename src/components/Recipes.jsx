@@ -3,7 +3,7 @@ import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import RecipeCard from "./RecipeCard";
 
-function Home() {
+function Recipes() {
     const { token } = useAuth();
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [pantry, setPantry] = useState([]);
@@ -138,4 +138,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Recipes;
