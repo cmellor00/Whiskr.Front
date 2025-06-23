@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import "../styles/theme.css";
+import "../Styles/theme.css";
 
 
 function NavBar() {
