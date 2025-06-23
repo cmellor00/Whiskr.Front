@@ -1,0 +1,36 @@
+nav {
+    background-color: #336D82;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav a {
+    color: #F5ECE0;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #5F99AE;
+    color: #F5ECE0;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #693382;
+    color: #F5ECE0;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #5F99AE;
+}
