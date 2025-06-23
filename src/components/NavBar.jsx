@@ -1,37 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import "../../styles/theme.css";
+
 
 function NavBar() {
     const { token, logout } = useAuth();
 
     return (
-        <nav style={{ padding: "1rem", backgroundColor: "#f5f5f5", borderBottom: "1px solid #ccc" }}>
+        <nav>
 
 
-            <Link to="/" style={{ marginRight: "1rem" }}>Home</Link>
+            <Link to="/">Home</Link>
 
             {!token ? (
                 <>
-                    <Link to="/login" style={{ marginRight: "1rem" }}>Login</Link>
+                    <Link to="/login" >Login</Link>
                     <Link to="/register">Register</Link>
                 </>
             ) : (
                 <>
-                    <Link to="/recipes" style={{ marginRight: "1rem" }}>My Recipe Book</Link>
-                    <Link to="/pantry" style={{ marginRight: "1rem" }}>My Pantry</Link>
-                    <Link to="/addRecipe" style={{ marginRight: "1rem" }}>Add Recipe</Link>
+                    <Link to="/recipes" >My Recipe Book</Link>
+                    <Link to="/pantry" >My Pantry</Link>
+                    <Link to="/addRecipe" >Add Recipe</Link>
 
                     <button
                         onClick={logout}
-                        style={{
-                            background: "none",
-                            border: "none",
-                            color: "blue",
-                            cursor: "pointer",
-                            padding: 0,
-                            marginLeft: "1rem"
-                        }}
                     >
                         Logout
                     </button>

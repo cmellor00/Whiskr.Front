@@ -1,36 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { API } from "../api/apiContext";
-import { useAuth } from "../auth/AuthContext";
-import RecipeCard from "./RecipeCard";
-
-
 function Recipes() {
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState("");
     const [expandedRecipeId, setExpandedRecipeId] = useState(null);
     const [ingredientsById, setIngredientsById] = useState({});
 
-    const toggleIngredients = async (id) => {
-        if (expandedRecipeId === id) {
-            setExpandedRecipeId(null);
-            return;
-        }
-
-
-        if (!ingredientsById[id]) {
-            try {
-                const res = await fetch(`${API}/recipes/${id}/ingredients`);
-                const data = await res.json();
-                setIngredientsById((prev) => ({ ...prev, [id]: data }));
-            } catch (err) {
-                console.error("Error fetching ingredients:", err);
-                setError("Failed to load ingredients.");
-                return;
-            }
-        }
-
-        setExpandedRecipeId(id);
-    };
+    const { token } = useAuth();
 
     useEffect(() => {
         fetch(`${API}/recipes`)
@@ -45,11 +19,8 @@ function Recipes() {
             });
     }, []);
 
-    const { token } = useAuth(); // get user token
-
     const handleSave = async (id) => {
         try {
-            console.log("🔐 Token being sent:", token);
             const res = await fetch(`${API}/saved`, {
                 method: "POST",
                 headers: {
@@ -66,6 +37,41 @@ function Recipes() {
         }
     };
 
+    const handleRemove = async (id) => {
+        try {
+            const res = await fetch(`${API}/saved/${id}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!res.ok) throw new Error("Delete failed");
+
+            setRecipes((prev) => prev.filter((r) => r.id !== id));
+        } catch (err) {
+            console.error(err);
+            setError("Failed to remove recipe.");
+        }
+    };
+
+    const toggleIngredients = async (id) => {
+        if (expandedRecipeId === id) {
+            setExpandedRecipeId(null);
+            return;
+        }
+
+        if (!ingredientsById[id]) {
+            try {
+                const res = await fetch(`${API}/recipes/${id}/ingredients`);
+                const data = await res.json();
+                setIngredientsById((prev) => ({ ...prev, [id]: data }));
+            } catch (err) {
+                console.error("Error fetching ingredients:", err);
+                setError("Failed to load ingredients.");
+                return;
+            }
+        }
+
+        setExpandedRecipeId(id);
+    };
 
     return (
         <div>
@@ -73,17 +79,23 @@ function Recipes() {
             {error && <p style={{ color: "red" }}>{error}</p>}
             <ul>
                 {recipes.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipe={recipe} onDelete={() => setRecipes(recipes.filter(r => r.id !== recipe.id))} />
+                    <li key={recipe.id}>
+                        <RecipeCard recipe={recipe} />
+                        <button onClick={() => handleSave(recipe.id)}>💾 Save</button>
+                        <button onClick={() => handleRemove(recipe.id)}>❌ Remove</button>
+                        <button onClick={() => toggleIngredients(recipe.id)}>
+                            {expandedRecipeId === recipe.id ? "Hide Ingredients" : "Show Ingredients"}
+                        </button>
+                        {expandedRecipeId === recipe.id && ingredientsById[recipe.id] && (
+                            <ul>
+                                {ingredientsById[recipe.id].map((ing) => (
+                                    <li key={ing.id}>{ing.name}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
                 ))}
             </ul>
         </div>
     );
 }
-
-export default Recipes;
-
-
-
-
-
-
