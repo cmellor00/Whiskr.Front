@@ -34,3 +34,13 @@ button {
 button:hover {
     background-color: #5F99AE;
 }
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+}

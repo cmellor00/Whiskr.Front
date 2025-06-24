@@ -1,0 +1,137 @@
+@media (max-width: 700px) {
+    .add-recipe-form {
+        padding: 1rem;
+    }
+
+    .ingredient-group .ingredient-inputs {
+        flex-direction: column;
+    }
+
+    .ingredient-group input {
+        min-width: 100%;
+    }
+
+    .form-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-actions button,
+    .ingredient-inputs button {
+        width: 100%;
+    }
+
+    .home-container,
+    .pantry-form {
+        padding: 1rem;
+        flex-direction: column;
+    }
+
+    .recipe-item {
+        padding: 0.75rem;
+    }
+
+    .recipe-item button {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+
+    .pantry-form input,
+    .pantry-form button {
+        width: 100%;
+    }
+
+    .missing-ingredients,
+    .has-all-ingredients {
+        font-size: 0.95rem;
+    }
+
+    button,
+    input,
+    textarea {
+        font-size: 1rem;
+        min-height: 44px;
+    }
+
+    nav {
+        position: relative;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 3.5rem;
+        right: 1rem;
+        background-color: #693382;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        flex-direction: column;
+        min-width: 220px;
+        padding: 0.75rem 0;
+        z-index: 999;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a,
+    .nav-links button {
+        width: 100%;
+        color: white;
+        text-align: left;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        font-family: inherit;
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        box-shadow: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Faint dividers between links */
+    .nav-links a:not(:last-child),
+    .nav-links button:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-links a:hover,
+    .nav-links button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: background-color 0.2s ease;
+    }
+
+    /* Remove tap/click active background */
+    .nav-links a:focus,
+    .nav-links a:active,
+    .nav-links button:focus,
+    .nav-links button:active {
+        background: none;
+        outline: none;
+        box-shadow: none;
+    }
+
+    /* Optional: keep visible focus for keyboard users */
+    .nav-links a:focus-visible,
+    .nav-links button:focus-visible {
+        outline: 2px dashed #fff;
+        outline-offset: 2px;
+    }
+}
