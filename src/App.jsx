@@ -7,6 +7,8 @@ import Register from "./auth/Register";
 import SavedRecipes from "./components/SavedRecipes";
 import Pantry from "./components/Pantry";
 import AddRecipe from "./components/AddRecipe";
+import BarcodeScanner from "./components/BarcodeScanner";
+import "./Styles/mobileStyles.css"
 
 function App() {
     return (
@@ -19,6 +21,7 @@ function App() {
                 <Route path="/recipes" element={<SavedRecipes />} />
                 <Route path="/pantry" element={<Pantry />} />
                 <Route path="/addRecipe" element={<AddRecipe />} />
+                <Route path="/scan" element={<BarcodeScanner />} />
             </Routes>
         </div>
     );
