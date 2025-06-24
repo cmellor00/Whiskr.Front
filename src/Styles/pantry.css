@@ -1,0 +1,33 @@
+/* Pantry-specific overrides and additions */
+
+.pantry-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.pantry-form input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+}
+
+.pantry-form button {
+    background-color: #c7f5d2;
+    border: 1px solid #4ade80;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pantry-form button:hover {
+    background-color: #86efac;
+}
+
+.pantry-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
+import "../Styles/home.css";
 
 function Pantry() {
     const { token } = useAuth();
