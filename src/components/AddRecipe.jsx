@@ -4,6 +4,7 @@ import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import "../Styles/home.css";
 import "../Styles/addRecipe.css"; // New scoped styles
+import "../Styles/mobileStyles.css"
 
 export default function AddRecipe() {
     const [title, setTitle] = useState("");

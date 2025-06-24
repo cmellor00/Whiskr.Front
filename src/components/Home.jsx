@@ -3,7 +3,7 @@ import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import RecipeCard from "./RecipeCard";
 import "../Styles/home.css";
-
+import "../Styles/mobileStyles.css"
 
 function Home() {
     const [recipes, setRecipes] = useState([]);

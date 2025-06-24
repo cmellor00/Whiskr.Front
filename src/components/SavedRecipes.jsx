@@ -4,6 +4,7 @@ import { API } from "../api/apiContext";
 import RecipeCard from "./RecipeCard";
 import "../Styles/home.css";
 import "../Styles/savedRecipes.css"
+import "../Styles/mobileStyles.css"
 
 function SavedRecipes() {
     const { token } = useAuth();

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
+import BarcodeScanner from "./BarcodeScanner";
 import "../Styles/home.css";
 import "../Styles/pantry.css";
+import "../Styles/mobileStyles.css"
 
 function Pantry() {
     const { token } = useAuth();
@@ -94,6 +96,9 @@ function Pantry() {
                 />
                 <button type="submit">Add</button>
             </form>
+
+            {/* <h3 style={{ marginTop: "2rem" }}>📷 Scan to Add Items</h3>
+            <BarcodeScanner /> */}
 
             <ul className="recipe-list">
                 {pantry.map((item) => (
