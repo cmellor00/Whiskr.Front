@@ -94,6 +94,24 @@ function Recipes() {
     };
 
 
+    const handleRemove = async (recipeId) => {
+        try {
+            const res = await fetch(`${API}/saved/${recipeId}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!res.ok) throw new Error("Delete failed");
+
+            // Refresh state
+            setSavedRecipes(savedRecipes.filter((r) => r.id !== recipeId));
+            const newMissing = { ...missingByRecipe };
+            delete newMissing[recipeId];
+            setMissingByRecipe(newMissing);
+        } catch (err) {
+            console.error(err);
+            setError("Failed to remove recipe.");
+        }
+    };
 
 
     return (

@@ -6,9 +6,8 @@ export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) 
     const [expanded, setExpanded] = useState(false);
     const [ingredients, setIngredients] = useState([]);
     const [error, setError] = useState("");
-    const { token, user } = useAuth(); // ensure user includes is_admin
 
-    const isAdmin = user?.is_admin;
+
 
     const toggleIngredients = async () => {
         if (expanded) {
@@ -46,25 +45,7 @@ export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) 
         }
     };
 
-    const handleDelete = async () => {
-        if (!window.confirm("Are you sure you want to delete this recipe?")) return;
-        try {
-            const res = await fetch(`${API}/recipes/${recipe.id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            if (!res.ok) throw new Error("Delete failed");
-            alert("Recipe deleted!");
 
-            if (onDelete) onDelete();
-
-        } catch (err) {
-            console.error(err);
-            alert("Could not delete recipe.");
-        }
-    };
 
 
     return (
@@ -91,11 +72,7 @@ export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) 
                         <button onClick={handleSave}>📥 Save to My Book</button>
                     )}
 
-                    {isAdmin && (
-                        <button onClick={handleDelete} style={{ color: "red" }}>
-                            ❌ Delete Recipe
-                        </button>
-                    )}
+
                 </div>
             )}
         </li>
