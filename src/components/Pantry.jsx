@@ -71,47 +71,49 @@ function Pantry() {
         <div className="home-container">
             <h2 className="home-heading">🥕 My Pantry</h2>
             {error && <p className="error-message">{error}</p>}
+            <div className="pantry-layout">
+                <form className="pantry-form" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Ingredient"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        required
+                    />
+                    <input
+                        type="number"
+                        placeholder="Quantity"
+                        value={form.quantity}
+                        onChange={(e) => setForm({ ...form, quantity: e.target.value })}
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Unit"
+                        value={form.unit}
+                        onChange={(e) => setForm({ ...form, unit: e.target.value })}
+                        required
+                    />
+                    <button type="submit">Add</button>
+                </form>
 
-            <form className="pantry-form" onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Ingredient"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    required
-                />
-                <input
-                    type="number"
-                    placeholder="Quantity"
-                    value={form.quantity}
-                    onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-                    required
-                />
-                <input
-                    type="text"
-                    placeholder="Unit"
-                    value={form.unit}
-                    onChange={(e) => setForm({ ...form, unit: e.target.value })}
-                    required
-                />
-                <button type="submit">Add</button>
-            </form>
-
-            {/* <h3 style={{ marginTop: "2rem" }}>📷 Scan to Add Items</h3>
+                {/* <h3 style={{ marginTop: "2rem" }}>📷 Scan to Add Items</h3>
             <BarcodeScanner /> */}
 
-            <ul className="recipe-list">
-                {pantry.map((item) => (
-                    <li key={item.id} className="recipe-item pantry-item">
-                        {item.name} – {item.quantity} {item.unit}
-                        <button className="delete-button" onClick={() => handleDelete(item.id)}>
-                            ❌
-                        </button>
-                    </li>
-                ))}
-            </ul>
+                <ul className="pantry-list">
+                    {pantry.map((item) => (
+                        <li key={item.id} className="pantry-item">
+                            {item.name} – {item.quantity} {item.unit}
+                            <button className="delete-button" onClick={() => handleDelete(item.id)}>
+                                ❌
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
+
 }
 
 export default Pantry;
