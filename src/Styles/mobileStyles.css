@@ -105,7 +105,6 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* Faint dividers between links */
     .nav-links a:not(:last-child),
     .nav-links button:not(:last-child) {
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -118,7 +117,6 @@
         transition: background-color 0.2s ease;
     }
 
-    /* Remove tap/click active background */
     .nav-links a:focus,
     .nav-links a:active,
     .nav-links button:focus,
@@ -128,7 +126,6 @@
         box-shadow: none;
     }
 
-    /* Optional: keep visible focus for keyboard users */
     .nav-links a:focus-visible,
     .nav-links button:focus-visible {
         outline: 2px dashed #fff;

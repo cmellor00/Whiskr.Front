@@ -10,14 +10,12 @@ function NavBar() {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
     const navRef = useRef();
 
-    // Handle window resize to determine mobile state
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 700);
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Close menu when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (navRef.current && !navRef.current.contains(event.target)) {

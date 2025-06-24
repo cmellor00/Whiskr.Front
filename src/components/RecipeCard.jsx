@@ -48,10 +48,18 @@ export default function RecipeCard({ recipe, showSaveButton = true }) {
 
     return (
         <div className="recipe-item">
+            {recipe.image_url && (
+                <img
+                    src={recipe.image_url}
+                    alt={recipe.title}
+                    className="recipe-image"
+                />
+            )}
             <button className="toggle-button" onClick={toggleIngredients}>
                 <strong>{recipe.title}</strong>
             </button>
             <p className="recipe-description">{recipe.description}</p>
+
             {error && <p className="error-message">{error}</p>}
 
             {expanded && (

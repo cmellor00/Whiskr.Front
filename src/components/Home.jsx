@@ -53,7 +53,7 @@ function Home() {
             if (!res.ok) throw new Error("Delete failed");
             alert("Recipe deleted!");
 
-            setRecipes((prev) => prev.filter((r) => r.id !== recipe.id)); // remove from list
+            setRecipes((prev) => prev.filter((r) => r.id !== recipe.id));
         } catch (err) {
             console.error(err);
             alert("Could not delete recipe.");

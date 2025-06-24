@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import "../Styles/home.css";
-import "../Styles/addRecipe.css"; // New scoped styles
+import "../Styles/addRecipe.css";
 import "../Styles/mobileStyles.css"
 
 export default function AddRecipe() {
