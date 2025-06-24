@@ -47,9 +47,14 @@
 
 .recipe-image {
     width: 100%;
+    max-width: 500px;
+    /* Restrict to a reasonable max */
     height: auto;
     border-radius: 8px;
     margin-bottom: 0.75rem;
     object-fit: cover;
     max-height: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
