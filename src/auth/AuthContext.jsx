@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
     };
 
     const fetchUser = async (token) => {
-        console.log("🔐 Fetching user with token:", token); // Debug log
+
         try {
             const response = await fetch(`${API}/users/me`, {
                 headers: {
@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
             });
             const data = await response.json();
             if (response.ok) {
-                console.log("✅ User fetched:", data); // Debug log
+                console.log("✅ User fetched:", data);
                 setUser(data);
             } else {
                 console.error("❌ Failed to fetch user:", data);
@@ -56,7 +56,7 @@ export function AuthProvider({ children }) {
         const result = await res.json();
         if (!res.ok) throw result;
         setToken(result.token);
-        await fetchUser(result.token); // Immediate fetch
+        await fetchUser(result.token);
     };
 
     const login = async (credentials) => {
@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
         const result = await res.json();
         if (!res.ok) throw result;
         setToken(result.token);
-        await fetchUser(result.token); // Immediate fetch
+        await fetchUser(result.token);
     };
 
     const logout = () => {
