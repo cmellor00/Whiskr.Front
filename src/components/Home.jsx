@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import RecipeCard from "./RecipeCard";
+import "./home.css";
+
 
 function Home() {
     const [recipes, setRecipes] = useState([]);
@@ -60,26 +62,28 @@ function Home() {
 
 
     return (
-        <div>
-            <h2>📖 Recipes</h2>
+        <div className="home-container">
+            <h2 className="home-heading">📖 Recipes</h2>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {recipes.length === 0 ? (
                 <p>No recipes found. Add or save some to get started!</p>
             ) : (
-                <ul>
+                <ul className="recipe-list">
                     {recipes.map((recipe) => (
-                        <li key={recipe.id}>
+                        <li key={recipe.id} className="recipe-item">
                             <RecipeCard
                                 recipe={recipe}
                                 showSaveButton={true}
                                 onDelete={() =>
-                                    setRecipes((prev) => prev.filter((r) => r.id !== recipe.id))
+                                    setRecipes((prev) =>
+                                        prev.filter((r) => r.id !== recipe.id)
+                                    )
                                 }
                             />
                             {isAdmin && (
                                 <button
                                     onClick={() => handleDelete(recipe)}
-                                    style={{ color: "red", marginTop: "0.5em" }}
+                                    className="delete-button"
                                 >
                                     ❌ Delete Recipe
                                 </button>
@@ -87,10 +91,9 @@ function Home() {
                         </li>
                     ))}
                 </ul>
-
             )}
         </div>
     );
-}
 
-export default Home;
+
+    export default Home;
