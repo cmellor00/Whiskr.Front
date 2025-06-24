@@ -10,7 +10,7 @@
         align-items: flex-start;
     }
 
-    .pantry-form {
+    .pantry-form-scanner {
         flex: 1;
         max-width: 40%;
     }
@@ -18,6 +18,15 @@
     .pantry-list {
         flex: 2;
         max-width: 60%;
+    }
+
+    .scanner-wrapper {
+        width: 100%;
+    }
+
+    #scanner {
+        width: 100% !important;
+        aspect-ratio: 1 / 1;
     }
 }
 
@@ -60,4 +69,11 @@
 
 .pantry-form button:hover {
     background-color: #552a67;
+}
+
+.pantry-form-scanner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
 }
