@@ -15,14 +15,14 @@
 }
 
 .pantry-form button {
-    background-color: #5F99AE;
+    background-color: #693382;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
 }
 
 .pantry-form button:hover {
-    background-color: #86efac;
+    background-color: #5F99AE;
 }
 
 .pantry-item {

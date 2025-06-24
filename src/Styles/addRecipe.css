@@ -34,7 +34,7 @@
 }
 
 .ingredient-inputs button {
-    background-color: #5F99AE;
+    background-color: #693382;
 
     border-radius: 4px;
     padding: 0.5rem 1rem;
@@ -42,7 +42,7 @@
 }
 
 .ingredient-inputs button:hover {
-    background-color: #693382;
+    background-color: #5F99AE;
 }
 
 .ingredient-list {
@@ -55,7 +55,7 @@
 }
 
 .form-actions button {
-    background-color: #5F99AE;
+    background-color: #693382;
 
     border-radius: 4px;
     padding: 0.75rem 1.5rem;
@@ -63,5 +63,5 @@
 }
 
 .form-actions button:hover {
-    background-color: #693382;
+    background-color: #5F99AE;
 }
