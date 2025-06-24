@@ -64,7 +64,7 @@ function Home() {
     return (
         <div className="home-container">
             <h2 className="home-heading">📖 Recipes</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             {recipes.length === 0 ? (
                 <p>No recipes found. Add or save some to get started!</p>
             ) : (
