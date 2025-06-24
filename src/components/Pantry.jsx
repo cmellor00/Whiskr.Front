@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import "../Styles/home.css";
+import "../Styles/pantry.css";
 
 function Pantry() {
     const { token } = useAuth();
@@ -16,9 +17,7 @@ function Pantry() {
     const fetchPantry = async () => {
         try {
             const res = await fetch(`${API}/pantry`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
             if (!res.ok) throw new Error("Failed to fetch pantry");
             const data = await res.json();
@@ -43,7 +42,7 @@ function Pantry() {
 
             if (!res.ok) throw new Error("Failed to add item");
             setForm({ name: "", quantity: "", unit: "" });
-            fetchPantry(); // Refresh pantry list
+            fetchPantry();
         } catch (err) {
             console.error(err);
             setError("Failed to add pantry item.");
@@ -54,29 +53,24 @@ function Pantry() {
         try {
             const res = await fetch(`${API}/pantry/${id}`, {
                 method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
             if (!res.ok) throw new Error("Failed to delete item");
-            fetchPantry(); // Refresh list
+            fetchPantry();
         } catch (err) {
             console.error(err);
             setError("Failed to delete pantry item.");
         }
     };
 
-
-
     if (!token) return <p>Please log in to view and manage your pantry.</p>;
 
     return (
-        <div>
-            <h2>My Pantry</h2>
+        <div className="home-container">
+            <h2 className="home-heading">🧺 My Pantry</h2>
+            {error && <p className="error-message">{error}</p>}
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
-
-            <form onSubmit={handleSubmit} style={{ marginBottom: "1em" }}>
+            <form className="pantry-form" onSubmit={handleSubmit}>
                 <input
                     type="text"
                     placeholder="Ingredient"
@@ -101,18 +95,16 @@ function Pantry() {
                 <button type="submit">Add</button>
             </form>
 
-            <ul>
-                {pantry.map((item, i) => (
-                    <li key={item.id}>
+            <ul className="recipe-list">
+                {pantry.map((item) => (
+                    <li key={item.id} className="recipe-item pantry-item">
                         {item.name} – {item.quantity} {item.unit}
-                        <button onClick={() => handleDelete(item.id)} style={{ marginLeft: "1em" }}>
+                        <button className="delete-button" onClick={() => handleDelete(item.id)}>
                             ❌
                         </button>
                     </li>
                 ))}
             </ul>
-
-
         </div>
     );
 }
