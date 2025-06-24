@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import RecipeCard from "./RecipeCard";
+import "../styles/home.css";
+import "../styles/savedRecipes.css"
 
 function SavedRecipes() {
     const { token } = useAuth();
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [pantry, setPantry] = useState([]);
     const [missingByRecipe, setMissingByRecipe] = useState({});
+    const [expandedIds, setExpandedIds] = useState(new Set());
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -15,7 +18,6 @@ function SavedRecipes() {
             if (!token) return;
 
             try {
-                // Load pantry
                 const pantryRes = await fetch(`${API}/pantry`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -23,7 +25,6 @@ function SavedRecipes() {
                 const pantryData = await pantryRes.json();
                 setPantry(pantryData);
 
-                // Load saved recipes
                 const savedRes = await fetch(`${API}/saved`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -31,7 +32,6 @@ function SavedRecipes() {
                 const savedData = await savedRes.json();
                 setSavedRecipes(savedData);
 
-                // Calculate missing ingredients
                 const allMissing = {};
                 for (const recipe of savedData) {
                     const ingredientRes = await fetch(`${API}/recipes/${recipe.id}/ingredients`);
@@ -55,6 +55,18 @@ function SavedRecipes() {
         return recipeIngredients.filter(ri => !pantrySet.has(normalize(ri.name)));
     };
 
+    const toggleExpand = (id) => {
+        setExpandedIds((prev) => {
+            const newSet = new Set(prev);
+            if (newSet.has(id)) {
+                newSet.delete(id);
+            } else {
+                newSet.add(id);
+            }
+            return newSet;
+        });
+    };
+
     const handleUnsave = async (recipeId) => {
         if (!window.confirm("Remove this recipe from your saved list?")) return;
 
@@ -65,11 +77,15 @@ function SavedRecipes() {
             });
             if (!res.ok) throw new Error("Unsave failed");
 
-            // Update UI
             setSavedRecipes((prev) => prev.filter((r) => r.id !== recipeId));
             const updatedMissing = { ...missingByRecipe };
             delete updatedMissing[recipeId];
             setMissingByRecipe(updatedMissing);
+            setExpandedIds((prev) => {
+                const newSet = new Set(prev);
+                newSet.delete(recipeId);
+                return newSet;
+            });
         } catch (err) {
             console.error(err);
             setError("Failed to unsave recipe.");
@@ -77,39 +93,55 @@ function SavedRecipes() {
     };
 
     return (
-        <div>
-            <h3>📚 Your Saved Recipes</h3>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className="home-container">
+            <h3 className="home-heading">📚 Your Saved Recipes</h3>
+            {error && <p className="error-message">{error}</p>}
 
             {savedRecipes.length === 0 ? (
                 <p>You haven't saved any recipes yet.</p>
             ) : (
-                <ul>
-                    {savedRecipes.map((recipe) => (
-                        <li key={recipe.id}>
-                            <RecipeCard recipe={recipe} showSaveButton={false} />
+                <ul className="recipe-list">
+                    {savedRecipes.map((recipe) => {
+                        const missing = missingByRecipe[recipe.id] || [];
+                        const isExpanded = expandedIds.has(recipe.id);
 
-                            {missingByRecipe[recipe.id]?.length > 0 && (
-                                <div style={{ color: "red" }}>
-                                    <strong>❌ Missing Ingredients:</strong>
-                                    <ul>
-                                        {missingByRecipe[recipe.id].map((ing, idx) => (
-                                            <li key={idx}>
-                                                {ing.name} – {ing.quantity} {ing.unit}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
+                        return (
+                            <li key={recipe.id} className="recipe-item">
+                                <RecipeCard recipe={recipe} showSaveButton={false} />
 
-                            <button
-                                onClick={() => handleUnsave(recipe.id)}
-                                style={{ marginTop: "0.5em" }}
-                            >
-                                🗑️ Unsave Recipe
-                            </button>
-                        </li>
-                    ))}
+                                {missing.length > 0 ? (
+                                    <>
+                                        <button
+                                            onClick={() => toggleExpand(recipe.id)}
+                                            className="toggle-button"
+                                        >
+                                            {isExpanded ? "Hide Missing Ingredients ❌" : "Show Missing Ingredients ⚠️"}
+                                        </button>
+                                        {isExpanded && (
+                                            <div className="missing-ingredients">
+                                                <ul>
+                                                    {missing.map((ing, idx) => (
+                                                        <li key={idx}>
+                                                            {ing.name} – {ing.quantity} {ing.unit}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <p className="has-all-ingredients">✅ All ingredients on hand!</p>
+                                )}
+
+                                <button
+                                    onClick={() => handleUnsave(recipe.id)}
+                                    className="delete-button"
+                                >
+                                    🗑️ Unsave Recipe
+                                </button>
+                            </li>
+                        );
+                    })}
                 </ul>
             )}
         </div>

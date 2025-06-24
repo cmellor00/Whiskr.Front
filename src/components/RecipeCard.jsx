@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
+import "../styles/home.css";
 
-export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) {
+export default function RecipeCard({ recipe, showSaveButton = true }) {
     const [expanded, setExpanded] = useState(false);
     const [ingredients, setIngredients] = useState([]);
     const [error, setError] = useState("");
     const { token } = useAuth();
-
 
     const toggleIngredients = async () => {
         if (expanded) {
@@ -45,20 +45,18 @@ export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) 
         }
     };
 
-
-
-
     return (
-        <li style={{ marginBottom: "1em" }}>
-            <button onClick={toggleIngredients}>
+        <div className="recipe-item">
+            <button className="toggle-button" onClick={toggleIngredients}>
                 <strong>{recipe.title}</strong>
             </button>
-            <p>{recipe.description}</p>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            <p className="recipe-description">{recipe.description}</p>
+            {error && <p className="error-message">{error}</p>}
+
             {expanded && (
-                <div>
+                <div className="expanded-content">
                     <h4>🧂 Ingredients</h4>
-                    <ul>
+                    <ul className="ingredient-list">
                         {ingredients.map((ing, idx) => (
                             <li key={idx}>
                                 {ing.name} – {ing.quantity} {ing.unit}
@@ -69,12 +67,12 @@ export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) 
                     <p>{recipe.instructions}</p>
 
                     {showSaveButton && token && (
-                        <button onClick={handleSave}>📥 Save to My Book</button>
+                        <button className="save-button" onClick={handleSave}>
+                            📥 Save to My Book
+                        </button>
                     )}
-
-
                 </div>
             )}
-        </li>
+        </div>
     );
 }

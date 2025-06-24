@@ -1,0 +1,15 @@
+.missing-ingredients {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #ffecec;
+    border-left: 4px solid #ff6b6b;
+}
+
+.has-all-ingredients {
+    color: #155724;
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+}
