@@ -6,7 +6,7 @@ export default function RecipeCard({ recipe, showSaveButton = true, onDelete }) 
     const [expanded, setExpanded] = useState(false);
     const [ingredients, setIngredients] = useState([]);
     const [error, setError] = useState("");
-
+    const { token } = useAuth();
 
 
     const toggleIngredients = async () => {
