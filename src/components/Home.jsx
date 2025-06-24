@@ -1,10 +1,14 @@
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../auth/AuthContext";
+import { API } from "../api/apiContext";
+import RecipeCard from "./RecipeCard";
+
 function Home() {
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState("");
-    const [expandedRecipeId, setExpandedRecipeId] = useState(null);
-    const [ingredientsById, setIngredientsById] = useState({});
+    const { token, user } = useAuth();
 
-    const { token } = useAuth();
+    const isAdmin = user?.is_admin;
 
     useEffect(() => {
         fetch(`${API}/recipes`)
@@ -18,24 +22,6 @@ function Home() {
                 setError("Failed to load recipes.");
             });
     }, []);
-
-    const handleSave = async (id) => {
-        try {
-            const res = await fetch(`${API}/saved`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ recipeId: id }),
-            });
-            if (!res.ok) throw new Error("Save failed");
-            alert("Recipe saved!");
-        } catch (err) {
-            console.error(err);
-            alert("Could not save recipe.");
-        }
-    };
 
     const handleRemove = async (id) => {
         try {
@@ -52,53 +38,59 @@ function Home() {
         }
     };
 
-    const toggleIngredients = async (id) => {
-        if (expandedRecipeId === id) {
-            setExpandedRecipeId(null);
-            return;
-        }
 
-        if (!ingredientsById[id]) {
-            try {
-                const res = await fetch(`${API}/recipes/${id}/ingredients`);
-                const data = await res.json();
-                setIngredientsById((prev) => ({ ...prev, [id]: data }));
-            } catch (err) {
-                console.error("Error fetching ingredients:", err);
-                setError("Failed to load ingredients.");
-                return;
-            }
-        }
+    const handleDelete = async (recipe) => {
+        if (!window.confirm("Are you sure you want to delete this recipe?")) return;
+        try {
+            const res = await fetch(`${API}/recipes/${recipe.id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!res.ok) throw new Error("Delete failed");
+            alert("Recipe deleted!");
 
-        setExpandedRecipeId(id);
+            setRecipes((prev) => prev.filter((r) => r.id !== recipe.id)); // remove from list
+        } catch (err) {
+            console.error(err);
+            alert("Could not delete recipe.");
+        }
     };
+
 
     return (
         <div>
             <h2>📖 Recipes</h2>
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <ul>
-                {recipes.map((recipe) => (
-                    <li key={recipe.id}>
-                        <RecipeCard recipe={recipe} />
-                        <button onClick={() => handleSave(recipe.id)}>💾 Save</button>
-                        <button onClick={() => handleRemove(recipe.id)}>❌ Remove</button>
-                        <button onClick={() => toggleIngredients(recipe.id)}>
-                            {expandedRecipeId === recipe.id ? "Hide Ingredients" : "Show Ingredients"}
-                        </button>
-                        {expandedRecipeId === recipe.id && ingredientsById[recipe.id] && (
-                            <ul>
-                                {ingredientsById[recipe.id].map((ing) => (
-                                    <li key={ing.id}>{ing.name}</li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                ))}
-            </ul>
+            {recipes.length === 0 ? (
+                <p>No recipes found. Add or save some to get started!</p>
+            ) : (
+                <ul>
+                    {recipes.map((recipe) => (
+                        <li key={recipe.id}>
+                            <RecipeCard
+                                recipe={recipe}
+                                showSaveButton={true}
+                                onDelete={() =>
+                                    setRecipes((prev) => prev.filter((r) => r.id !== recipe.id))
+                                }
+                            />
+                            {isAdmin && (
+                                <button
+                                    onClick={() => handleDelete(recipe)}
+                                    style={{ color: "red", marginTop: "0.5em" }}
+                                >
+                                    ❌ Delete Recipe
+                                </button>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+
+            )}
         </div>
     );
 }
-
 
 export default Home;
