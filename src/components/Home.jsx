@@ -70,7 +70,7 @@ function Home() {
             ) : (
                 <ul className="recipe-list">
                     {recipes.map((recipe) => (
-                        <li key={recipe.id} className="recipe-item">
+                        <li key={recipe.id}>
                             <RecipeCard
                                 recipe={recipe}
                                 showSaveButton={true}

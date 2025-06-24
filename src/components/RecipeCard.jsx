@@ -48,13 +48,15 @@ export default function RecipeCard({ recipe, showSaveButton = true }) {
 
     return (
         <div className="recipe-item">
-            {recipe.image_url && (
-                <img
-                    src={recipe.image_url}
-                    alt={recipe.title}
-                    className="recipe-image"
-                />
-            )}
+            <div className="recipe-image-wrapper">
+                {recipe.image_url && (
+                    <img
+                        src={recipe.image_url}
+                        alt={recipe.title}
+                        className="recipe-image"
+                    />
+                )}
+            </div>
             <button className="toggle-button" onClick={toggleIngredients}>
                 <strong>{recipe.title}</strong>
             </button>
