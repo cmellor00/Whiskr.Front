@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { API } from "../api/apiContext";
 import RecipeCard from "./RecipeCard";
-import "../styles/home.css";
-import "../styles/savedRecipes.css"
+import "../Styles/home.css";
+import "../Styles/savedRecipes.css"
 
 function SavedRecipes() {
     const { token } = useAuth();
