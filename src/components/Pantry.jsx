@@ -67,7 +67,7 @@ function Pantry() {
 
     return (
         <div className="home-container">
-            <h2 className="home-heading">🧺 My Pantry</h2>
+            <h2 className="home-heading">🥕 My Pantry</h2>
             {error && <p className="error-message">{error}</p>}
 
             <form className="pantry-form" onSubmit={handleSubmit}>
